@@ -287,3 +287,76 @@
   opacity: 0.9;
   transform: translateY(-1px);
 }
+.important-notice {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 4px;
+  text-align: center;
+  position: relative;
+  z-index: 1000;
+}
+
+.notice-message {
+  color: #856404;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.notice-links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.notice-link {
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  color: white;
+  transition: transform 0.2s;
+}
+
+.notice-link.backend {
+  background-color: #0066cc;
+}
+
+.notice-link.github {
+  background-color: #24292e;
+}
+
+.notice-link:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.error-container {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #fff5f5;
+  border: 1px solid #feb2b2;
+  border-radius: 4px;
+}
+
+.error-help {
+  margin-top: 10px;
+  color: #666;
+  font-size: 14px;
+}
+
+.error-help ul {
+  margin: 5px 0;
+  padding-left: 20px;
+}
+
+.error-help a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.error-help a:hover {
+  text-decoration: underline;
+}

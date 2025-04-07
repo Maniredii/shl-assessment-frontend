@@ -85,25 +85,54 @@ const SearchForm = () => {
           </button>
         </form>
 
-        <div className="alert-links">
-          <div className="alert-message">
-            ⚠️ We are having trouble connecting frontend and backend
+        {/* Important Links - Always Visible */}
+        <div className="important-notice">
+          <div className="notice-message">
+            ⚠️ Important: Check our resources below
           </div>
-          <div className="quick-links">
+          <div className="notice-links">
             <a href="https://shl-assessmentss.vercel.app/" 
                target="_blank" 
                rel="noopener noreferrer"
-               className="backend-link">
-              Check Backend Here
+               className="notice-link backend">
+              Backend Status
             </a>
             <a href="https://github.com/Maniredii/SHL-Assessment-Recommendation-System.git" 
                target="_blank" 
                rel="noopener noreferrer"
-               className="code-link">
-              View Code Here
+               className="notice-link github">
+              View Source Code
             </a>
           </div>
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="error-container">
+            <div className="error-message">{error}</div>
+            <div className="error-help">
+              Please check:
+              <ul>
+                <li>Your search query</li>
+                <li><a href="https://shl-assessmentss.vercel.app/" target="_blank" rel="noopener noreferrer">Backend status</a></li>
+                <li><a href="https://github.com/Maniredii/SHL-Assessment-Recommendation-System.git" target="_blank" rel="noopener noreferrer">Documentation</a></li>
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {/* Recommendations Display */}
+        {recommendations.length > 0 && (
+          <div className="recommendations">
+            <h3>Recommended Assessments:</h3>
+            {recommendations.map((rec, index) => (
+              <div key={index} className="recommendation-item">
+                <h4>{rec.title}</h4>
+                <p>{rec.description}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <div className="footer-links">
         <p>Having trouble? Check our resources:</p>
