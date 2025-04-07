@@ -58,3 +58,20 @@
   background-color: #cccccc;
   cursor: not-allowed;
 }
+
+.backend-status {
+  text-align: center;
+  margin: 15px 0;
+  padding: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.backend-status a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.backend-status a:hover {
+  text-decoration: underline;
+}

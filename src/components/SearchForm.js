@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './SearchForm.css';
 
@@ -7,6 +7,22 @@ const SearchForm = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [recommendations, setRecommendations] = useState([]);
+  const [backendStatus, setBackendStatus] = useState(false);
+
+  // Check backend status on component mount
+  useEffect(() => {
+    checkBackendStatus();
+  }, []);
+
+  const checkBackendStatus = async () => {
+    try {
+      const response = await axios.get('https://shl-assessmentss.vercel.app/');
+      setBackendStatus(response.data.status === 'success');
+    } catch (error) {
+      console.error('Backend status check failed:', error);
+      setBackendStatus(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,19 +30,21 @@ const SearchForm = () => {
     setError(null);
 
     try {
+      console.log('Sending query:', query); // Debug log
       const response = await axios.post('https://shl-assessmentss.vercel.app/api/recommend', {
         query: query
-      }, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
       });
       
-      setRecommendations(response.data.recommendations);
-      console.log('API Response:', response.data);
+      console.log('Backend response:', response.data); // Debug log
+      
+      if (response.data.status === 'success' && response.data.recommendations) {
+        setRecommendations(response.data.recommendations);
+      } else {
+        throw new Error('Invalid response format');
+      }
     } catch (error) {
       console.error('API Error:', error);
-      setError('An error occurred while fetching recommendations. Please try again.');
+      setError(`Error: ${error.response?.data?.message || 'Failed to fetch recommendations'}`);
     } finally {
       setLoading(false);
     }
@@ -46,7 +64,15 @@ const SearchForm = () => {
           {loading ? 'Loading...' : 'GET RECOMMENDATIONS'}
         </button>
       </form>
-      
+
+      <div className="backend-status">
+        Backend Status: {backendStatus ? '✅ Connected' : '❌ Not Connected'} 
+        <br />
+        <a href="https://shl-assessmentss.vercel.app/" target="_blank" rel="noopener noreferrer">
+          Check backend server status
+        </a>
+      </div>
+
       {error && <div className="error-message">{error}</div>}
       
       {recommendations.length > 0 && (
