@@ -85,11 +85,11 @@ const SearchForm = () => {
       </form>
 
       <div className="backend-status">
-        Backend Status: {backendStatus ? '✅ Connected' : '❌ Not Connected'} 
+        We are having trouble connecting frontend and backend. 
         <br />
-        <a href={API_BASE_URL} target="_blank" rel="noopener noreferrer">
-          Check backend server status
-        </a>
+        Check the backend here: <a href="https://shl-assessmentss.vercel.app/" target="_blank" rel="noopener noreferrer">Backend Status</a>
+        <br />
+        View full project code: <a href="https://github.com/Maniredii/SHL-Assessment-Recommendation-System.git" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
       </div>
 
       {error && <div className="error-message">{error}</div>}
