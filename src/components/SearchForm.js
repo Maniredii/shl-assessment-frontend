@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './SearchForm.css';
 
+const API_BASE_URL = 'https://shl-assessmentss.vercel.app';
+
 const SearchForm = () => {
   const [query, setQuery] = useState('');
   const [error, setError] = useState(null);
@@ -9,18 +11,28 @@ const SearchForm = () => {
   const [recommendations, setRecommendations] = useState([]);
   const [backendStatus, setBackendStatus] = useState(false);
 
-  // Check backend status on component mount
   useEffect(() => {
     checkBackendStatus();
   }, []);
 
   const checkBackendStatus = async () => {
     try {
-      const response = await axios.get('https://shl-assessmentss.vercel.app/');
-      setBackendStatus(response.data.status === 'success');
+      const response = await axios.get(`${API_BASE_URL}/health`);
+      setBackendStatus(response.data.status === 'healthy');
     } catch (error) {
-      console.error('Backend status check failed:', error);
+      console.error('Backend health check failed:', error);
       setBackendStatus(false);
+    }
+  };
+
+  const fetchRecommendations = async (searchQuery) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/recommend`, {
+        params: { query: searchQuery }
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to fetch recommendations');
     }
   };
 
@@ -30,21 +42,14 @@ const SearchForm = () => {
     setError(null);
 
     try {
-      console.log('Sending query:', query); // Debug log
-      const response = await axios.post('https://shl-assessmentss.vercel.app/api/recommend', {
-        query: query
-      });
-      
-      console.log('Backend response:', response.data); // Debug log
-      
-      if (response.data.status === 'success' && response.data.recommendations) {
-        setRecommendations(response.data.recommendations);
+      const data = await fetchRecommendations(query);
+      if (data.status === 'success' && data.recommendations) {
+        setRecommendations(data.recommendations);
       } else {
         throw new Error('Invalid response format');
       }
     } catch (error) {
-      console.error('API Error:', error);
-      setError(`Error: ${error.response?.data?.message || 'Failed to fetch recommendations'}`);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -68,7 +73,7 @@ const SearchForm = () => {
       <div className="backend-status">
         Backend Status: {backendStatus ? '✅ Connected' : '❌ Not Connected'} 
         <br />
-        <a href="https://shl-assessmentss.vercel.app/" target="_blank" rel="noopener noreferrer">
+        <a href={API_BASE_URL} target="_blank" rel="noopener noreferrer">
           Check backend server status
         </a>
       </div>
