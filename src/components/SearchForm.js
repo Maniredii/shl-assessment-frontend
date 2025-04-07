@@ -85,49 +85,25 @@ const SearchForm = () => {
           </button>
         </form>
 
-        <div className="help-links">
-          <p>Having trouble getting recommendations?</p>
-          <div className="link-container">
+        <div className="alert-links">
+          <div className="alert-message">
+            ⚠️ We are having trouble connecting frontend and backend
+          </div>
+          <div className="quick-links">
             <a href="https://shl-assessmentss.vercel.app/" 
                target="_blank" 
                rel="noopener noreferrer"
-               className="status-link">
-              Check Backend Status
+               className="backend-link">
+              Check Backend Here
             </a>
             <a href="https://github.com/Maniredii/SHL-Assessment-Recommendation-System.git" 
                target="_blank" 
                rel="noopener noreferrer"
-               className="github-link">
-              View Source Code
+               className="code-link">
+              View Code Here
             </a>
           </div>
         </div>
-
-        {recommendations.length > 0 && (
-          <div className="recommendations">
-            <h3>Recommended Assessments:</h3>
-            {recommendations.map((rec, index) => (
-              <div key={index} className="recommendation-item">
-                <h4>{rec.title}</h4>
-                <p>{rec.description}</p>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {error && <div className="error-message">{error}</div>}
-        
-        {recommendations.length > 0 && (
-          <div className="recommendations">
-            <h3>Recommended Assessments:</h3>
-            {recommendations.map((rec, index) => (
-              <div key={index} className="recommendation-item">
-                <h4>{rec.title}</h4>
-                <p>{rec.description}</p>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
       <div className="footer-links">
         <p>Having trouble? Check our resources:</p>
