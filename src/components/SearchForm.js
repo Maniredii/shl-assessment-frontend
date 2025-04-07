@@ -27,12 +27,19 @@ const SearchForm = () => {
 
   const fetchRecommendations = async (searchQuery) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/api/recommend`, {
-        params: { query: searchQuery }
+      const response = await axios.post(`${API_BASE_URL}/api/recommend`, {
+        query: searchQuery
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
       });
+      console.log('API Response:', response.data); // Debug log
       return response.data;
     } catch (error) {
-      throw new Error('Failed to fetch recommendations');
+      console.error('API Error Details:', error.response || error); // Enhanced error logging
+      throw new Error(error.response?.data?.message || 'Failed to fetch recommendations');
     }
   };
 
@@ -41,14 +48,21 @@ const SearchForm = () => {
     setLoading(true);
     setError(null);
 
+    if (!query.trim()) {
+      setError('Please enter a search query');
+      setLoading(false);
+      return;
+    }
+
     try {
       const data = await fetchRecommendations(query);
-      if (data.status === 'success' && data.recommendations) {
+      if (data && data.recommendations) {
         setRecommendations(data.recommendations);
       } else {
-        throw new Error('Invalid response format');
+        throw new Error('No recommendations found');
       }
     } catch (error) {
+      console.error('Submit Error:', error);
       setError(error.message);
     } finally {
       setLoading(false);
