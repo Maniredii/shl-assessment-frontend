@@ -121,3 +121,39 @@
 .info-message a:hover {
   text-decoration: underline;
 }
+
+.footer-links {
+  text-align: center;
+  margin: 30px auto;
+  padding: 20px;
+  max-width: 800px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.footer-links p {
+  margin-bottom: 15px;
+  color: #666;
+  font-size: 16px;
+}
+
+.github-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #24292e;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.github-button:hover {
+  background-color: #2f363d;
+  text-decoration: none;
+}
+
+.github-button span {
+  font-size: 16px;
+  font-weight: 500;
+}

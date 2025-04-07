@@ -70,45 +70,56 @@ const SearchForm = () => {
   };
 
   return (
-    <div className="search-container">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Enter your query..."
-          className="search-input"
-        />
-        <button type="submit" disabled={loading} className="search-button">
-          {loading ? 'Loading...' : 'GET RECOMMENDATIONS'}
-        </button>
-      </form>
+    <>
+      <div className="search-container">
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Enter your query..."
+            className="search-input"
+          />
+          <button type="submit" disabled={loading} className="search-button">
+            {loading ? 'Loading...' : 'GET RECOMMENDATIONS'}
+          </button>
+        </form>
 
-      <div className="info-message">
-        <p>We are having trouble for connecting frontend and backend.</p>
-        <p>Check the backend here: <a href="https://shl-assessmentss.vercel.app/" target="_blank" rel="noopener noreferrer">Backend Status</a></p>
-        <p>Check the full code for this: <a href="https://github.com/Maniredii/SHL-Assessment-Recommendation-System.git" target="_blank" rel="noopener noreferrer">GitHub Repository</a></p>
-      </div>
-
-      <div className="debug-info">
-        {query && <p>Current Query: {query}</p>}
-        <p>Backend Response Status: {loading ? 'Processing...' : error ? 'Error' : recommendations.length > 0 ? 'Success' : 'Waiting'}</p>
-      </div>
-
-      {error && <div className="error-message">{error}</div>}
-      
-      {recommendations.length > 0 && (
-        <div className="recommendations">
-          <h3>Recommended Assessments:</h3>
-          {recommendations.map((rec, index) => (
-            <div key={index} className="recommendation-item">
-              <h4>{rec.title}</h4>
-              <p>{rec.description}</p>
-            </div>
-          ))}
+        <div className="info-message">
+          <p>We are having trouble for connecting frontend and backend.</p>
+          <p>Check the backend here: <a href="https://shl-assessmentss.vercel.app/" target="_blank" rel="noopener noreferrer">Backend Status</a></p>
+          <p>Check the full code for this: <a href="https://github.com/Maniredii/SHL-Assessment-Recommendation-System.git" target="_blank" rel="noopener noreferrer">GitHub Repository</a></p>
         </div>
-      )}
-    </div>
+
+        <div className="debug-info">
+          {query && <p>Current Query: {query}</p>}
+          <p>Backend Response Status: {loading ? 'Processing...' : error ? 'Error' : recommendations.length > 0 ? 'Success' : 'Waiting'}</p>
+        </div>
+
+        {error && <div className="error-message">{error}</div>}
+        
+        {recommendations.length > 0 && (
+          <div className="recommendations">
+            <h3>Recommended Assessments:</h3>
+            {recommendations.map((rec, index) => (
+              <div key={index} className="recommendation-item">
+                <h4>{rec.title}</h4>
+                <p>{rec.description}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      <div className="footer-links">
+        <p>Having trouble? Check our resources:</p>
+        <a href="https://github.com/Maniredii/SHL-Assessment-Recommendation-System.git" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           className="github-button">
+          <span>📁 View Project Source Code on GitHub</span>
+        </a>
+      </div>
+    </>
   );
 };
 
