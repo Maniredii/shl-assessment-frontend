@@ -84,10 +84,19 @@ const SearchForm = () => {
         </button>
       </form>
 
-      <div className="backend-status">
-        We are having trouble connecting frontend and backend. 
+      <div className="connection-status">
+        We are having trouble for connecting frontend and backend.
         <br />
         Check the backend here: <a href="https://shl-assessmentss.vercel.app/" target="_blank" rel="noopener noreferrer">Backend Status</a>
+      </div>
+
+      <div className="github-link">
+        Check the full code here: <a href="https://github.com/Maniredii/SHL-Assessment-Recommendation-System.git" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+      </div>
+
+      <div className="backend-status">
+        Backend Status: {backendStatus ? '✅ Connected' : '❌ Not Connected'} 
+      </div>
         <br />
         View full project code: <a href="https://github.com/Maniredii/SHL-Assessment-Recommendation-System.git" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
       </div>

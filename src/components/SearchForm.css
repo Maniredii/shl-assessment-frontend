@@ -63,19 +63,27 @@
   text-align: center;
   margin: 15px 0;
   padding: 10px;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 4px;
+  color: #856404;
+}
+
+.github-link {
+  text-align: center;
+  margin: 10px 0;
+  padding: 8px;
   background-color: #f8f9fa;
   border-radius: 4px;
   font-size: 14px;
-  color: #666;
-  line-height: 1.6;
 }
 
-.backend-status a {
+.connection-status a, .github-link a {
   color: #0066cc;
   text-decoration: none;
   font-weight: 500;
 }
 
-.backend-status a:hover {
+.connection-status a:hover, .github-link a:hover {
   text-decoration: underline;
 }
