@@ -157,3 +157,46 @@
   font-size: 16px;
   font-weight: 500;
 }
+
+.help-links {
+  text-align: center;
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.help-links p {
+  margin-bottom: 12px;
+  color: #666;
+}
+
+.link-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.status-link, .github-link {
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.status-link {
+  background-color: #e7f3ff;
+  color: #0066cc;
+  border: 1px solid #cce5ff;
+}
+
+.github-link {
+  background-color: #24292e;
+  color: white;
+}
+
+.status-link:hover, .github-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
