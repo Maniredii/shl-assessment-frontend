@@ -1,0 +1,26 @@
+.app-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.table-container {
+  margin-top: 2rem;
+}
+
+.form-container {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.title {
+  color: #1976d2;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.submit-button {
+  margin-top: 1rem;
+  width: 200px;
+} 
