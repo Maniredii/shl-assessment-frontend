@@ -87,3 +87,37 @@
 .connection-status a:hover, .github-link a:hover {
   text-decoration: underline;
 }
+
+.debug-info {
+  margin: 15px 0;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #666;
+}
+
+.info-message {
+  text-align: center;
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 4px;
+  color: #856404;
+}
+
+.info-message p {
+  margin: 8px 0;
+}
+
+.info-message a {
+  color: #0066cc;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.info-message a:hover {
+  text-decoration: underline;
+}
