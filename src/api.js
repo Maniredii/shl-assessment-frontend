@@ -6,9 +6,7 @@ const BACKEND_URL = 'https://shl-assessment-backend-c8ug.onrender.com';
 export const axiosInstance = axios.create({
   baseURL: BACKEND_URL,
   headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'Origin': 'https://shl-assessment-nine.vercel.app'
+    'Content-Type': 'application/json'
   },
   timeout: 60000 // 60 seconds timeout since Render free tier can be slow to wake up
 });
@@ -36,7 +34,6 @@ axiosInstance.interceptors.response.use(
   (response) => {
     console.log('API response received:', {
       status: response.status,
-      headers: response.headers,
       data: response.data
     });
     return response;
@@ -52,6 +49,16 @@ axiosInstance.interceptors.response.use(
       fullUrl: `${error.config?.baseURL}${error.config?.url}`
     };
     console.error('API Error Details:', errorDetails);
+
+    if (error.response?.status === 0 || error.code === 'ERR_NETWORK') {
+      return Promise.reject({
+        response: {
+          data: {
+            error: 'CORS Error: The backend server is not accessible. This might be due to CORS restrictions or the server being down.'
+          }
+        }
+      });
+    }
 
     if (!error.response) {
       const errorMessage = error.code === 'ECONNABORTED'
