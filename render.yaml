@@ -1,0 +1,8 @@
+services:
+  - type: static
+    name: shl-frontend
+    buildCommand: npm install && npm run build
+    publish: build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://shl-backend.onrender.com 
