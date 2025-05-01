@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // API configuration
-const API_URL = process.env.REACT_APP_API_URL || 'https://shl-backend.onrender.com';
+const API_URL = process.env.REACT_APP_API_URL || 'https://shl-assessment-backend-c8ug.onrender.com';
 
 export const axiosInstance = axios.create({
   baseURL: API_URL,
