@@ -6,9 +6,11 @@ const API_URL = process.env.REACT_APP_API_URL || 'https://shl-assessment-backend
 export const axiosInstance = axios.create({
   baseURL: API_URL,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
   },
-  timeout: 10000 // 10 seconds timeout
+  timeout: 30000, // 30 seconds timeout
+  withCredentials: false
 });
 
 // Add request interceptor for debugging
@@ -18,12 +20,13 @@ axiosInstance.interceptors.request.use(
       url: config.url,
       method: config.method,
       baseURL: config.baseURL,
+      headers: config.headers,
       data: config.data
     });
     return config;
   },
   (error) => {
-    console.error('Request error:', error.message);
+    console.error('Request error:', error);
     return Promise.reject(error);
   }
 );
@@ -33,26 +36,30 @@ axiosInstance.interceptors.response.use(
   (response) => {
     console.log('API response received:', {
       status: response.status,
+      headers: response.headers,
       data: response.data
     });
     return response;
   },
   (error) => {
+    console.error('API Error Details:', {
+      message: error.message,
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      headers: error.response?.headers,
+      data: error.response?.data,
+      config: error.config
+    });
+
     if (!error.response) {
-      const errorMessage = `Unable to connect to the backend server at ${API_URL}. Please ensure the server is running.`;
-      console.error('Network Error:', errorMessage);
       return Promise.reject({
         response: {
-          data: { error: errorMessage }
+          data: {
+            error: `Network error: Unable to connect to the backend server at ${API_URL}. Please ensure the server is running and CORS is properly configured.`
+          }
         }
       });
     }
-
-    console.error('API Error:', {
-      status: error.response?.status,
-      data: error.response?.data,
-      message: error.message
-    });
 
     return Promise.reject(error);
   }
