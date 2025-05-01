@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BACKEND_URL = 'https://shl-assessment-backend-c8ug.onrender.com';
+const BACKEND_URL = 'https://shl-assessment-backend-c8ug.onrender.com:10000';
 
 // Create axios instance with the correct configuration
 export const axiosInstance = axios.create({
@@ -16,13 +16,9 @@ export const axiosInstance = axios.create({
 // Add request interceptor for debugging
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Ensure the URL starts with /recommend
-    if (config.url.includes('recommend') && !config.url.startsWith('/recommend')) {
-      config.url = '/recommend';
-    }
-    
-    console.log('Making API request:', {
-      url: `${config.baseURL}${config.url}`,
+    // Log the full URL being called
+    const fullUrl = `${config.baseURL}${config.url}`;
+    console.log('Making API request to:', fullUrl, {
       method: config.method,
       headers: config.headers,
       data: config.data
@@ -46,20 +42,22 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.error('API Error Details:', {
+    // Enhanced error logging
+    const errorDetails = {
       message: error.message,
       status: error.response?.status,
       statusText: error.response?.statusText,
-      headers: error.response?.headers,
       data: error.response?.data,
-      config: error.config
-    });
+      url: error.config?.url,
+      fullUrl: `${error.config?.baseURL}${error.config?.url}`
+    };
+    console.error('API Error Details:', errorDetails);
 
     if (!error.response) {
       return Promise.reject({
         response: {
           data: {
-            error: `Network error: Unable to connect to ${BACKEND_URL}. Please try again.`
+            error: `Network error: Unable to connect to ${BACKEND_URL}. Please check if the backend server is running.`
           }
         }
       });
