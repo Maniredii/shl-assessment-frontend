@@ -3,6 +3,7 @@ import axios from 'axios';
 // API configuration
 const API_URL = process.env.REACT_APP_API_URL || 'https://shl-assessment-backend-c8ug.onrender.com';
 
+// Create axios instance with the correct base URL
 export const axiosInstance = axios.create({
   baseURL: API_URL,
   headers: {
@@ -16,6 +17,11 @@ export const axiosInstance = axios.create({
 // Add request interceptor for debugging
 axiosInstance.interceptors.request.use(
   (config) => {
+    // Remove any duplicate /api prefixes
+    if (config.url.startsWith('/api')) {
+      config.url = config.url.replace('/api', '');
+    }
+    
     console.log('Making API request:', {
       url: config.url,
       method: config.method,

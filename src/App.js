@@ -76,7 +76,7 @@ function App() {
     setRecommendations([]);
 
     try {
-      const response = await axiosInstance.post('/api/recommend', {
+      const response = await axiosInstance.post('/recommend', {
         query,
         url
       });
