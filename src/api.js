@@ -1,11 +1,8 @@
 import axios from 'axios';
 
-// API configuration
-const API_URL = process.env.REACT_APP_API_URL || 'https://shl-assessment-backend-c8ug.onrender.com';
-
-// Create axios instance with the correct base URL
+// Create axios instance with the correct configuration
 export const axiosInstance = axios.create({
-  baseURL: API_URL,
+  baseURL: '',  // Use relative URLs
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
@@ -17,9 +14,9 @@ export const axiosInstance = axios.create({
 // Add request interceptor for debugging
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Remove any duplicate /api prefixes
-    if (config.url.startsWith('/api')) {
-      config.url = config.url.replace('/api', '');
+    // Ensure the URL starts with /recommend
+    if (config.url.includes('recommend') && !config.url.startsWith('/recommend')) {
+      config.url = '/recommend';
     }
     
     console.log('Making API request:', {
@@ -61,7 +58,7 @@ axiosInstance.interceptors.response.use(
       return Promise.reject({
         response: {
           data: {
-            error: `Network error: Unable to connect to the backend server at ${API_URL}. Please ensure the server is running and CORS is properly configured.`
+            error: 'Network error: Unable to connect to the backend server. Please try again.'
           }
         }
       });

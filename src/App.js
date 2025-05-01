@@ -77,8 +77,8 @@ function App() {
 
     try {
       const response = await axiosInstance.post('/recommend', {
-        query,
-        url
+        query: query.trim(),
+        url: url.trim()
       });
 
       if (response.data.recommendations) {
