@@ -1,16 +1,16 @@
 import axios from 'axios';
 
-const BACKEND_URL = 'https://shl-assessment-backend-c8ug.onrender.com:10000';
+const BACKEND_URL = 'https://shl-assessment-backend-c8ug.onrender.com';
 
 // Create axios instance with the correct configuration
 export const axiosInstance = axios.create({
   baseURL: BACKEND_URL,
   headers: {
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+    'Origin': 'https://shl-assessment-nine.vercel.app'
   },
-  timeout: 30000, // 30 seconds timeout
-  withCredentials: false
+  timeout: 60000 // 60 seconds timeout since Render free tier can be slow to wake up
 });
 
 // Add request interceptor for debugging
@@ -54,10 +54,14 @@ axiosInstance.interceptors.response.use(
     console.error('API Error Details:', errorDetails);
 
     if (!error.response) {
+      const errorMessage = error.code === 'ECONNABORTED'
+        ? 'The request timed out. The backend server might be starting up (this can take up to 30 seconds on the free tier). Please try again.'
+        : `Network error: Unable to connect to ${BACKEND_URL}. Please check if the backend server is running.`;
+      
       return Promise.reject({
         response: {
           data: {
-            error: `Network error: Unable to connect to ${BACKEND_URL}. Please check if the backend server is running.`
+            error: errorMessage
           }
         }
       });
