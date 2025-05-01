@@ -75,24 +75,30 @@ function App() {
     setError('');
     setRecommendations([]);
 
+    if (!query.trim() && !url.trim()) {
+      setError('Please enter a query or URL');
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await axiosInstance.post('/recommend', {
         query: query.trim(),
         url: url.trim()
       });
 
-      if (response.data.recommendations) {
+      if (response.data.recommendations && response.data.recommendations.length > 0) {
         setRecommendations(response.data.recommendations);
         if (response.data.message) {
-          showMessage(response.data.message);
+          showMessage(response.data.message, 'success');
         }
       } else {
-        showMessage('No recommendations found', 'warning');
+        showMessage('No matching tests found. Try different search terms.', 'warning');
       }
     } catch (err) {
       console.error('API Error:', err);
       const errorMessage = err.response?.data?.error || 
-                        'An error occurred while fetching recommendations. Please try again.';
+                        'An error occurred while connecting to the server. Please try again.';
       setError(errorMessage);
       showMessage(errorMessage, 'error');
     } finally {

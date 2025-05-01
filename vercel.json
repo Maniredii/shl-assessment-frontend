@@ -1,15 +1,13 @@
 {
-  "rewrites": [
+  "headers": [
     {
-      "source": "/recommend",
-      "destination": "https://shl-assessment-backend-c8ug.onrender.com/recommend"
-    },
-    {
-      "source": "/api/:path*",
-      "destination": "https://shl-assessment-backend-c8ug.onrender.com/:path*"
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
     }
-  ],
-  "env": {
-    "REACT_APP_API_URL": "https://shl-assessment-backend-c8ug.onrender.com"
-  }
+  ]
 } 

@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const BACKEND_URL = 'https://shl-assessment-backend-c8ug.onrender.com';
+
 // Create axios instance with the correct configuration
 export const axiosInstance = axios.create({
-  baseURL: '',  // Use relative URLs
+  baseURL: BACKEND_URL,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
@@ -20,9 +22,8 @@ axiosInstance.interceptors.request.use(
     }
     
     console.log('Making API request:', {
-      url: config.url,
+      url: `${config.baseURL}${config.url}`,
       method: config.method,
-      baseURL: config.baseURL,
       headers: config.headers,
       data: config.data
     });
@@ -58,7 +59,7 @@ axiosInstance.interceptors.response.use(
       return Promise.reject({
         response: {
           data: {
-            error: 'Network error: Unable to connect to the backend server. Please try again.'
+            error: `Network error: Unable to connect to ${BACKEND_URL}. Please try again.`
           }
         }
       });
